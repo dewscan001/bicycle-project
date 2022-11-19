@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import Navbar from "@/components/navbar.vue"
-import Main from "@/components/main.vue"
+import Navbar from "@/components/navbar.vue";
+import Main from "@/components/main.vue";
 </script>
 
 <template>
-  <Navbar/>
-  <Main/>
+  <Navbar />
+  <Main />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
