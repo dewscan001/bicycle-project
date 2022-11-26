@@ -1,5 +1,5 @@
 <template>
-  <Preloader v-if="!locker.length" color="black" scale="0.6" />
+  <Preloader v-if="!locker.length" color="black" :scale="0.6" />
   <div class="main-display" v-else>
     <h1>{{station}}</h1>
     <hr class="my-3" />
@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script allowJs>
 import database from "@/firebase";
 import Preloader from '@/components/loading.vue'
 import { ref, onValue } from "firebase/database";
@@ -38,7 +38,9 @@ export default {
   },
   watch : {
     locker(temp){
-      this.locker = temp.filter(q => typeof q == "number")
+      if(temp != this.locker){
+        this.locker = temp.filter(q => typeof q == "number")
+      }
     }
   },
   methods: {
