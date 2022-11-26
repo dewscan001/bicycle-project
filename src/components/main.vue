@@ -1,5 +1,5 @@
 <template>
-  <Preloader v-if="!locker.length" color="black" :scale="0.6" />
+  <Preloader v-if="!Object.keys(locker).length" color="black" :scale="0.6" />
   <div class="main-display" v-else>
     <h1>{{station}}</h1>
     <hr class="my-3" />
@@ -7,8 +7,10 @@
     <button
       :class="'btn btn-lg ' + (i != 0 ? 'btn-outline-success' : 'btn-outline-secondary') + ' mx-1 my-3'"
       style="height: 50vh; max-width: 5vw"
-      v-for="i in locker"
+      v-for="(i,index) in locker"
+      @click="writeData(index, i)"
     >
+    {{i}}
     </button>
   </div>
 </template>
@@ -16,7 +18,7 @@
 <script allowJs>
 import database from "@/firebase";
 import Preloader from '@/components/loading.vue'
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 
 
 export default {
@@ -36,18 +38,15 @@ export default {
     this.station = name;
     this.getValue();
   },
-  watch : {
-    locker(temp){
-      if(temp != this.locker){
-        this.locker = temp.filter(q => typeof q == "number")
-      }
-    }
-  },
   methods: {
     getValue(){
       onValue(ref(database, `/${this.station}`), (snapshot) => {
-        this.locker = snapshot.val();
+        this.locker = snapshot.toJSON();
       });
+    },
+    writeData(index, value) {
+      this.locker[index] = value !== 0 ? 0 : Math.floor(Math.random() * 10);
+      set(ref(database, `/${this.station}`), this.locker);
     }
   }
   
