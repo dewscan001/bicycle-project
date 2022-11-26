@@ -1,6 +1,6 @@
-#main {
+.main-display {
   max-width: 720px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 2rem;
   font-weight: normal;
 }
