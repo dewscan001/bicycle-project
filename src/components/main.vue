@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script allowJs>
+<script>
 import database from "@/firebase";
 import Preloader from '@/components/loading.vue'
 import { ref, onValue, set } from "firebase/database";
