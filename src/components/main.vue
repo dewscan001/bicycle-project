@@ -45,8 +45,8 @@ export default {
       });
     },
     writeData(index, value) {
-      this.locker[index] = value !== 0 ? 0 : Math.floor(Math.random() * 10);
-      set(ref(database, `/${this.station}`), this.locker);
+      value = value !== 0 ? 0 : Math.floor(Math.random() * 10);
+      set(ref(database, `/${this.station}/${index}`), value)
     }
   }
   
