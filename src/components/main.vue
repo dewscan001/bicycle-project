@@ -27,9 +27,9 @@ export default {
     return {
       station: '',
       locker: [],
-      history: [],
       using_bicycle: 0,
-      status: 'ยืม'
+      status: 'ยืม',
+      employee: localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : ''
     }
   },
   components: {
@@ -49,11 +49,8 @@ export default {
       });
     },
     writeData(index, bicycle) {
-      this.updateState(bicycle);
-      bicycle = bicycle !== 0 ? 0 : (Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10));
-      set(ref(database, `/${this.station}/${index}`), bicycle);
-    },
-    updateState(bicycle){
+      console.log(this.status, this.using_bicycle);
+      set(ref(database, `/${this.station}/${index}`), this.using_bicycle);
       if(bicycle !== 0){
         this.using_bicycle = bicycle;
       } 
@@ -66,16 +63,12 @@ export default {
       }
     },
     updateHistory(){
-      let employee = localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '';
-      
       let historyObj = {
-        name: employee,
+        name: this.employee,
         bicycle: this.using_bicycle,
         status: this.status
       }
       push(ref(database, `/B_HISTORY`), historyObj);
-      this.history.push(historyObj);
-      console.log(this.history);
     },
     updateStyle(bicycle){
       if(this.status === 'ยืม'){
