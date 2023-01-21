@@ -1,13 +1,11 @@
 <template>
   <Preloader v-if="!Object.keys(locker).length" color="black" :scale="0.6" />
   <div class="main-display" v-else>
-    <h1>{{station}}</h1>
-    <hr class="my-3" />
-    <p class="fs-5">{{status === 'ยืม' ? 'กรุณาเลือกจักรยานที่ต้องการยืม' : 'กรุณาเลือกช่องที่ต้องการคืนรถ'}}</p>
+    <h5>{{status === 'ยืม' ? 'กรุณาเลือกจักรยานที่ต้องการยืม' : 'กรุณาเลือกช่องที่จอดเพื่อล็อคจักรยาน'}}</h5>
     <button
-      :class="'btn btn-lg px-2 ' + updateStyle(bicycle) + ' mx-1 my-3'"
+      :class="'btn btn-lg px-3 ' + updateStyle(bicycle) + ' mx-1 my-3 bg-gradient'"
       :disabled="disabledBtn(bicycle)"
-      style="height: 50vh; max-width: 10vw"
+      style="height: 50vh;"
       v-for="(bicycle,index) in locker"
       @click="writeData(index, bicycle)"
     >

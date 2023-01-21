@@ -2,9 +2,12 @@
   <!-- As a heading -->
   <nav class="navbar bg-light fixed-top">
     <div class="container-fluid">
-      <div></div>
-      <div class="text-end" style="cursor:pointer;" @click="enterNewName()">
-        <button class="btn btn-sm btn-outline-secondary fs-4 px-3">{{employee}}</button>
+      <div class="fs-4"><b>{{ station }}</b></div>
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary fs-6 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{employee.split(" ")[0]}}</button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item fs-6" @click="enterNewName()">ออกจากระบบ</a></li>
+          </ul>
       </div>
     </div>
   </nav>
@@ -37,11 +40,14 @@
     return {
       employeeTemp: '',
       employee: '',
-      flagModal: false
+      flagModal: false,
+      station: ''
     }
   },
   created() {
+    let params = new URLSearchParams(document.location.search);
     this.employee = localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '';
+    this.station = params.get("st"); 
   },
   watch : {
     employee(){
