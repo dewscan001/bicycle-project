@@ -3,14 +3,15 @@
   <div class="main-display" v-else>
     <h1>{{station}}</h1>
     <hr class="my-3" />
-    <p class="fs-5">กรุณาเลือกจักรยาน</p>
+    <p class="fs-5">{{status === 'ยืม' ? 'กรุณาเลือกจักรยานที่ต้องการยืม' : 'กรุณาเลือกช่องที่ต้องการคืนรถ'}}</p>
     <button
-      :class="'btn btn-lg ' + (i != 0 ? 'btn-outline-success' : 'btn-outline-secondary') + ' mx-1 my-3'"
-      style="height: 50vh; max-width: 5vw"
-      v-for="(i,index) in locker"
-      @click="writeData(index, i)"
+      :class="'btn btn-lg px-2 ' + updateStyle(bicycle) + ' mx-1 my-3'"
+      :disabled="disabledBtn(bicycle)"
+      style="height: 50vh; max-width: 10vw"
+      v-for="(bicycle,index) in locker"
+      @click="writeData(index, bicycle)"
     >
-    {{i}}
+    {{bicycle}}
     </button>
   </div>
 </template>
@@ -18,14 +19,17 @@
 <script>
 import database from "@/firebase";
 import Preloader from '@/components/loading.vue'
-import { ref, onValue, set } from "firebase/database";
+import { ref, onValue, set, push } from "firebase/database";
 
 
 export default {
   data() {
     return {
       station: '',
-      locker: []
+      locker: [],
+      history: [],
+      using_bicycle: 0,
+      status: 'ยืม'
     }
   },
   components: {
@@ -44,9 +48,48 @@ export default {
         this.locker = snapshot.toJSON();
       });
     },
-    writeData(index, value) {
-      value = value !== 0 ? 0 : Math.floor(Math.random() * 10);
-      set(ref(database, `/${this.station}/${index}`), value)
+    writeData(index, bicycle) {
+      this.updateState(bicycle);
+      bicycle = bicycle !== 0 ? 0 : (Math.floor(Math.random() * 10) === 0 ? 1 : Math.floor(Math.random() * 10));
+      set(ref(database, `/${this.station}/${index}`), bicycle);
+    },
+    updateState(bicycle){
+      if(bicycle !== 0){
+        this.using_bicycle = bicycle;
+      } 
+      this.updateHistory()
+      if(this.status === 'ยืม'){
+        this.status = 'คืน';
+      } else {
+        this.using_bicycle = 0;
+        this.status = 'ยืม';
+      }
+    },
+    updateHistory(){
+      let employee = localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '';
+      
+      let historyObj = {
+        name: employee,
+        bicycle: this.using_bicycle,
+        status: this.status
+      }
+      push(ref(database, `/B_HISTORY`), historyObj);
+      this.history.push(historyObj);
+      console.log(this.history);
+    },
+    updateStyle(bicycle){
+      if(this.status === 'ยืม'){
+        return (bicycle !== 0 ? 'btn-outline-success' : 'btn-outline-secondary');
+      }else{
+        return (bicycle === 0 ? 'btn-outline-secondary' : 'btn-secondary');
+      }
+    },
+    disabledBtn(bicycle){
+      if(this.status === 'ยืม'){
+        return (bicycle !== 0 ? false : true);
+      }else{
+        return (bicycle === 0 ? false : true);
+      }
     }
   }
   
