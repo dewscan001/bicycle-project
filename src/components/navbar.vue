@@ -6,7 +6,7 @@
         <div class="dropdown">
           <button class="btn btn-sm btn-outline-secondary fs-6 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{employee.split(" ")[0]}}</button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item fs-6" @click="enterNewName()">ออกจากระบบ</a></li>
+            <li><a class="dropdown-item fs-6" @click="enterNewName()">เปลี่ยนชื่อผู้ใช้งาน</a></li>
           </ul>
       </div>
     </div>
