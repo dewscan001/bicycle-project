@@ -39,14 +39,13 @@
   data() {
     return {
       employeeTemp: '',
-      employee: '',
+      employee: localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '',
       flagModal: false,
       station: ''
     }
   },
   created() {
     let params = new URLSearchParams(document.location.search);
-    this.employee = localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '';
     this.station = params.get("st"); 
   },
   watch : {
