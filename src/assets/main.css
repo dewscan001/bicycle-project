@@ -1,5 +1,7 @@
 .main-display {
   margin: 50px auto;
+  padding: 2rem 0;
+  font-weight: normal;
 }
 
 #app{
