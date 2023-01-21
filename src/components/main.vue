@@ -5,7 +5,7 @@
     <button
       :class="'btn btn-lg px-3 ' + updateStyle(bicycle) + ' mx-1 my-3 bg-gradient'"
       :disabled="disabledBtn(bicycle)"
-      style="height: 50vh;"
+      style="height: 200px;"
       v-for="(bicycle,index) in locker"
       @click="writeData(index, bicycle)"
     >
