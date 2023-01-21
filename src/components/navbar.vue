@@ -59,7 +59,7 @@
   methods : {
     enterName(){
       if(confirm(`ชื่อ-สกุลของคุณคือ ${this.employeeTemp} ?`)){
-        this.$store.commit('set', this.employeeTemp);
+        this.$store.commit('set', this.employeeTemp.trim());
         this.employee = this.employeeTemp;
       }
     },
