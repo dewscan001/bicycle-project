@@ -39,7 +39,7 @@
   data() {
     return {
       employeeTemp: '',
-      employee: localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '',
+      employee: '',
       flagModal: false,
       station: ''
     }
@@ -47,6 +47,8 @@
   created() {
     let params = new URLSearchParams(document.location.search);
     this.station = params.get("st"); 
+    this.employee = this.$store.state.employee;
+    this.flagModal = true;
   },
   watch : {
     employee(){
@@ -57,7 +59,7 @@
   methods : {
     enterName(){
       if(confirm(`ชื่อ-สกุลของคุณคือ ${this.employeeTemp} ?`)){
-        localStorage.setItem("employee", this.employeeTemp);
+        this.$store.commit('set', this.employeeTemp);
         this.employee = this.employeeTemp;
       }
     },

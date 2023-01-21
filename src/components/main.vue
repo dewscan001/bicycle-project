@@ -27,7 +27,7 @@ export default {
       locker: [],
       using_bicycle: 0,
       status: 'ยืม',
-      employee: localStorage.getItem("employee") != 'undefined' ? localStorage.getItem("employee") : '',
+      employee: '',
       history_key: '/B_HISTORY'
     }
   },
@@ -35,6 +35,7 @@ export default {
     Preloader
   },
   created() {
+    this.employee = this.$store.state.employee;
     let params = new URLSearchParams(document.location.search);
     let name = params.get("st"); 
     // this.station = atob(name);
@@ -75,7 +76,7 @@ export default {
     },
     updateStyle(bicycle){
       if(this.status === 'ยืม'){
-        return (bicycle !== 0 ? 'btn-outline-success' : 'btn-outline-secondary');
+        return (bicycle !== 0 ? 'btn-success' : 'btn-outline-secondary');
       }else{
         return (bicycle === 0 ? 'btn-outline-secondary' : 'btn-secondary');
       }
