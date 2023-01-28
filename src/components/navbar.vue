@@ -2,7 +2,7 @@
   <!-- As a heading -->
   <nav class="navbar bg-light fixed-top">
     <div class="container-fluid">
-      <div class="fs-4"><b>{{ station }}</b></div>
+      <div class="fs-4"></div>
         <div class="dropdown">
           <button class="btn btn-sm btn-outline-secondary fs-6 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{employee.split(" ")[0]}}</button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
